@@ -8,9 +8,7 @@ import java.util.Scanner;
 public class GameLoop {
     private boolean isRunning;
     boolean player1EnvidoChant = false;
-    boolean player2EnvidoChant = false;
     boolean player1TrucoChant = false;
-    boolean player2TrucoChant = false;
 
     Player player1 = new Player("null");
     Player player2 = new Player("null");
@@ -56,7 +54,6 @@ public class GameLoop {
         //Define which player is hand and which is foot
         //first is random
 
-
         player1.isHand = true;
 
         if (player1.isHand == true){
@@ -70,15 +67,16 @@ public class GameLoop {
                     playTruco();
                     break;
                 case 3:
-                    //irse al mazo
+
                     break;
             }
-        } else
-           //Wait for the other player to play
-
-        playCard();
-        
+        }
+//        else
+//           //Wait for the other player to play
+//
+//        playCard();
     }
+
 
     private int playOptions() {
         Scanner scanner = new Scanner(System.in);
@@ -88,7 +86,6 @@ public class GameLoop {
         System.out.println("2. Truco");
         System.out.println("3. Al Mazo");
         return scanner.nextInt();
-
     }
 
     private void playTruco(){
@@ -99,11 +96,27 @@ public class GameLoop {
         playCard();
     }
 
+    private void reTruco(){
+
+    }
+
     private void playEnvido(){
         Scanner scanner = new Scanner(System.in);
         player1.calculateEnvidoPoints();
         player1EnvidoChant = true;
     }
+
+//    private void wonEnvido(){
+//        player1envidoPoints = player1.calculateEnvidoPoints();
+//        cpu.calculateEnvidoPoints(); = cpu.calculateEnvidoPoints();
+//        if (player1envidoPoints > cpu.envidoPoints){
+//            System.out.println("Jugador gana");}
+    //Añadir puntos correspondiente al nivel de envido
+//        }else{
+//            System.out.println("CPU gana");
+    //Añadir puntos correspondiente al nivel de envido
+//        }
+//    }
 
     public void playCard(){
         System.out.println(player1.getName()+", Elige la carta a jugar? [1,2,3]");
@@ -120,14 +133,11 @@ public class GameLoop {
         Card SelectedCard1 = hand.get(cardIndex-1);
         System.out.println(SelectedCard1);
         hand.remove(cardIndex-1);
-        System.out.println(hand.size() + " cards remaining");
+        System.out.println("Te quedan  :" + hand.size() + " cartas.");
     }
 
-//    private void updateScore(){
-//        player1.setScore(1);
-//    }
-//    public void ShowCards(){
-//
-//    }
+    private void updateScore(){
+        player1.setScore(15);
+    }
 
 }

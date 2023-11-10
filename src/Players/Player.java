@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Player {
+public abstract class Player {
     private String name;
 
     public boolean isHand;
@@ -136,4 +136,7 @@ public class Player {
         return envidoPoints;
     }
 
+    public abstract int playCard();
+
+    public abstract int chooseOption();
 }
