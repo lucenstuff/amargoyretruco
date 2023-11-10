@@ -7,9 +7,9 @@ public class SwordsCard extends Card {
     @Override
     public int trucoValue() {
         switch (this.rank) {
-            case ONE:
+            case UNO:
                 return 14;
-            case SEVEN:
+            case SIETE:
                 return 12;
         }
         return super.trucoValue();

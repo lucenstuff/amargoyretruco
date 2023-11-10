@@ -10,7 +10,7 @@ public class CoinsCard extends Card {
     @Override
     public int trucoValue() {
         switch (this.rank) {
-            case SEVEN:
+            case SIETE :
                 return 11;
         }
         return super.trucoValue();

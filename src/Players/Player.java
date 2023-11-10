@@ -8,6 +8,8 @@ import java.util.Map;
 public class Player {
     private String name;
 
+    public boolean isHand;
+
     public void setName(String name) {
         this.name = name;
     }

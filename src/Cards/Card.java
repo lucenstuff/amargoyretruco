@@ -19,34 +19,34 @@ public abstract class Card {
 
 
     public enum Rank {
-        ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, SOTA, HORSE, KING
+        UNO, DOS, TRES, CUATRO, CINCO, SEIS, SIETE, SOTA, CABALLO, REY
     }
 
     public enum Suit {
-        COINS, CLUBS, SWORDS, CUPS
+        ORO, BASTO, ESPADAS, COPAS
     }
 
     public int trucoValue() {
         switch (this.rank) {
-            case ONE:
+            case UNO:
                 return 8;
-            case TWO:
+            case DOS:
                 return 9;
-            case THREE:
+            case TRES:
                 return 10;
-            case FOUR:
+            case CUATRO:
                 return 1;
-            case FIVE:
+            case CINCO:
                 return 2;
-            case SIX:
+            case SEIS:
                 return 3;
-            case SEVEN:
+            case SIETE:
                 return 4;
             case SOTA:
                 return 5;
-            case HORSE:
+            case CABALLO:
                 return 6;
-            case KING:
+            case REY:
                 return 7;
         }
         return trucoValue();
@@ -54,23 +54,23 @@ public abstract class Card {
 
     public int envidoValue() {
         switch (this.rank) {
-            case ONE:
+            case UNO:
                 return 1;
-            case TWO:
+            case DOS:
                 return 2;
-            case THREE:
+            case TRES:
                 return 3;
-            case FOUR:
+            case CUATRO:
                 return 4;
-            case FIVE:
+            case CINCO:
                 return 5;
-            case SIX:
+            case SEIS:
                 return 6;
-            case SEVEN:
+            case SIETE:
                 return 7;
             case SOTA:
-            case HORSE:
-            case KING:
+            case CABALLO:
+            case REY:
                 return 0;
         }
         return envidoValue();
@@ -80,7 +80,7 @@ public abstract class Card {
 
     @Override
     public String toString() {
-        return "\n" + rank + " of " + suit;
+        return "\n" + rank + " DE " + suit;
     }
 
 }

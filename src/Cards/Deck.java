@@ -11,10 +11,10 @@ public class Deck {
         cards = new ArrayList<>();
 
         for (Card.Rank rank : Card.Rank.values()) {
-            Card cupsCard = new CupsCard(rank, Card.Suit.CUPS);
-            Card swordsCard = new SwordsCard(rank, Card.Suit.SWORDS);
-            Card coinsCard = new CoinsCard(rank, Card.Suit.COINS);
-            Card clubsCard = new ClubsCard(rank, Card.Suit.CLUBS);
+            Card cupsCard = new CupsCard(rank, Card.Suit.COPAS);
+            Card swordsCard = new SwordsCard(rank, Card.Suit.ESPADAS);
+            Card coinsCard = new CoinsCard(rank, Card.Suit.ORO);
+            Card clubsCard = new ClubsCard(rank, Card.Suit.BASTO);
 
             cards.add(cupsCard);
             cards.add(swordsCard);
