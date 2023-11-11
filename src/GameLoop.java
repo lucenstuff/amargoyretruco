@@ -2,21 +2,18 @@ package src;
 import src.Cards.Card;
 import src.Players.Player;
 import src.Cards.Deck;
+
 import java.util.List;
 import java.util.Scanner;
 
 public class GameLoop {
-    private boolean isRunning;
-    boolean player1EnvidoChant = false;
-    boolean player1TrucoChant = false;
-
     Player player1 = new Player("null");
-    Player player2 = new Player("null");
 
     public void start() {
         //Start game
-        isRunning = true;
+        printLogo();
         System.out.println("Juego Iniciado.");
+        System.out.println("");
         gameLoop();
         // Initialize players and deck
         // Game loop
@@ -27,100 +24,155 @@ public class GameLoop {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Jugador, ingresa tu nombre: ");
         player1.setName(scanner.nextLine());
-        while (isRunning && (player1.getScore() < 15 || player1.getScore() < 15)) {
-            // Update game logic
-            gameUpdate();
-        }
+
+        //implementar while loop una vez el algoritmo esté listo
+//        while ((player1.getScore() < 15 || player1.getScore() < 15)) {
+//            // Update game logic
+//        }
+        defineTurn();
+        gameUpdate();
     }
 
     private void gameUpdate() {
-        // generate a deck
+        // Generar mazo y mezclarlo
         Deck trucodeck = new Deck();
         trucodeck.shuffle();
-
-        //Each player draws 3 cards
         player1.drawCards(trucodeck);
-        //player2.drawCards(trucodeck);
+        defineTurn();
+        player1.isHand = true;
+        if (player1.isHand) {
+            System.out.println(player1.getName() + " eres mano, tu turno.");
+            printPlayerHand();
+            playOptions();
 
-        //cpu draws cards
+        } else {
+            System.out.println(player1.getName() + " no eres mano, aguarda tu turno.");
+            endGame();
+        }
+    }
 
-        //Phase 1 starts
+    public void endGame() {
+        player1.setScore(15);
+        // Print winner
+        System.out.println("El ganador es: " + player1.getName());
+    }
 
+    private void printPlayerHand(){
         // Print cards
         System.out.println();
         System.out.println(player1.getName() + " tu mano es: \n" + player1.getHand());
         System.out.println();
-
-        //Define which player is hand and which is foot
-        //first is random
-
-        player1.isHand = true;
-
-        if (player1.isHand == true){
-
-            //player1 plays
-            switch (playOptions()){
-                case 1:
-                    playEnvido();
-                    break;
-                case 2:
-                    playTruco();
-                    break;
-                case 3:
-
-                    break;
-            }
-        }
-//        else
-//           //Wait for the other player to play
-//
-//        playCard();
     }
 
+    private void defineTurn(){
+        int randomNumber = (int) (Math.random() * 2);
+        if (randomNumber == 0) {
+            player1.isHand = true;
 
-    private int playOptions() {
+        } else {
+            player1.isHand = false;
+        }
+    }
+
+    //Opciones para el jugador
+
+    private void playOptions() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println();
+
         System.out.println("Qué deseas hacer?");
         System.out.println("1. Envido");
         System.out.println("2. Truco");
-        System.out.println("3. Al Mazo");
-        return scanner.nextInt();
+        System.out.println("3. Jugar una carta");
+        System.out.println("4. Irse al mazo");
+
+        int option = scanner.nextInt();
+
+        switch (option) {
+            case 1:
+                playEnvido();
+                break;
+            case 2:
+                playTruco();
+                break;
+            case 3:
+                playCard();
+                break;
+            case 4:
+                endTurn();
+                break;
+            default:
+                System.out.println("Opción inválida");
+                break;
+        }
     }
-
-    private void playTruco(){
-        player1TrucoChant = true;
-        int TrucoCounter = 1;
-        //wait for other player to respond to truco
-        // if player respond yes
-        playCard();
+    public void endTurn(){
+        //Lógica para irse al mazo
     }
+    //loops de juego de envido y truco
 
-    private void reTruco(){
-
-    }
-
-    private void playEnvido(){
+    private void playEnvido() {
         Scanner scanner = new Scanner(System.in);
-        player1.calculateEnvidoPoints();
-        player1EnvidoChant = true;
+
+        System.out.println("¿Quieres cantar envido? (S/N)");
+        String respuesta = scanner.nextLine();
+
+        if (respuesta.equalsIgnoreCase("S")) {
+            System.out.println("Elige una opción:");
+            System.out.println("1. Envido");
+            System.out.println("2. Real Envido");
+            System.out.println("3. Falta Envido");
+
+            int opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    // Lógica para el envido
+                    int envidoPoints = player1.calculateEnvidoPoints();
+                    System.out.println("Tienes " + envidoPoints + " puntos de envido.");
+                    break;
+                case 2:
+                    // Lógica para el real envido (misma lógica que el envido)
+                    int realEnvidoPoints = player1.calculateEnvidoPoints();
+                    System.out.println("Tienes " + realEnvidoPoints + " puntos de envido.");
+                    break;
+                case 3:
+                    // Lógica para el falta envido
+                    int faltaEnvidoPoints = 15 - player1.calculateEnvidoPoints(); // Suponiendo que la partida se juega hasta 15 puntos
+                    System.out.println("Te faltan " + faltaEnvidoPoints + " puntos para ganar el envido.");
+                    break;
+                default:
+                    System.out.println("Opción inválida");
+                    break;
+            }
+            // Lógica para que la AI responda al envido
+            // ...
+        } else {
+            System.out.println("No cantaste envido.");
+            playCard();
+        }
     }
 
-//    private void wonEnvido(){
-//        player1envidoPoints = player1.calculateEnvidoPoints();
-//        cpu.calculateEnvidoPoints(); = cpu.calculateEnvidoPoints();
-//        if (player1envidoPoints > cpu.envidoPoints){
-//            System.out.println("Jugador gana");}
-    //Añadir puntos correspondiente al nivel de envido
-//        }else{
-//            System.out.println("CPU gana");
-    //Añadir puntos correspondiente al nivel de envido
-//        }
-//    }
+    private void playTruco() {
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.println("¿Quieres jugar truco? (S/N)");
+        String respuesta = scanner.nextLine();
+
+        if (respuesta.equalsIgnoreCase("S")) {
+            // Lógica para jugar al truco
+            System.out.println("Has jugado al truco.");
+
+            // Lógica para que la AI responda al truco (
+            // ...
+        } else {
+            System.out.println("No has jugado truco.");
+        }
+    }
+
+    //Jugar carta sin cantar
     public void playCard(){
-        System.out.println(player1.getName()+", Elige la carta a jugar? [1,2,3]");
-         List<Card> hand = player1.getHand();
+        System.out.println(player1.getName()+", Elige la carta a jugar [1,2,3]");
+        List<Card> hand = player1.getHand();
 
         int cardIndex = new Scanner(System.in).nextInt();
 
@@ -133,11 +185,24 @@ public class GameLoop {
         Card SelectedCard1 = hand.get(cardIndex-1);
         System.out.println(SelectedCard1);
         hand.remove(cardIndex-1);
-        System.out.println("Te quedan  :" + hand.size() + " cartas.");
+        System.out.println(hand.size() + " cards remaining");
     }
-
-    private void updateScore(){
-        player1.setScore(15);
-    }
-
+   public void printLogo () {
+       System.out.println("                                                                                                                                                                                                        \n" +
+               "      =%%#      =%%%#     .%%%%-      #%%=      #%%%%%#*-      =#@@@%+.     .+%@@%*-         #%%=    *%%*      .%%%%%%#+.   :%%%%%%%%%.-%%%%%%%%%%%  %%%%%%#+:   -%%%    *%%=    =#@@@#+      :*%@@%*.  \n" +
+               "      @@@@-     +@@@@:    =@@@@-     :@@@@      %@@@@@@@@#   .%@@@@@@@@:   -@@@@@@@@*        =@@@   :@@@.      .@@@@@@@@@+  -@@@@@@@@@.=@@@@@@@@@@@  @@@@@@@@@+  -@@@    %@@=   %@@@@@@@@.   +@@@@@@@@= \n" +
+               "     =@@@@#     +@@@@*    %@@@@-     #@@@@=     %@@+..-@@@=  #@@#.  +@@%  .@@@=  :@@@+        %@@+  #@@+       .@@@:..+@@@. -@@@......  ...=@@@...   @@@-..=@@@: -@@@    %@@=  *@@#.  *@@#  -@@@:  -@@@:\n" +
+               "     %@@%@@:    +@@@@@   :@@@@@-    .@@%@@%     %@@=   #@@* .@@@:   .%%%  +@@%    =@@@        :@@@ :@@%        .@@@.   @@@- -@@@           =@@@      @@@:   @@@= -@@@    %@@=  @@@:   .@@@. #@@+    *@@*\n" +
+               "    -@@*-@@*    +@@#@@=  *@@#@@-    *@@-*@@-    %@@=   %@@+ :@@@          #@@*    :@@@.        *@@=#@@-        .@@@.  .@@@: -@@@:::::      =@@@      @@@:   @@@- -@@@    %@@= :@@@.         @@@-    +@@%\n" +
+               "    #@@- @@@.   +@@+#@#  @@+#@@-   .@@@ -@@#    %@@#++#@@@. :@@@  :=====  #@@+    .@@@.         @@@@@#         .@@@+++%@@#  -@@@@@@@@:     =@@@      @@@*++%@@%  -@@@    %@@= :@@@          @@@-    =@@%\n" +
+               "   :@@@  +@@+   +@@*-@@.-@@.%@@-   +@@*  @@@:   %@@@@@@@#.  :@@@  +@@@@@. #@@+    .@@@.         =@@@@.         .@@@@@@@@+   -@@@*****.     =@@@      @@@@@@@@*   -@@@    %@@= :@@@          @@@-    =@@%\n" +
+               "   *@@%**#@@@   +@@# @@+#@# %@@-   @@@#**%@@#   %@@*-%@@#   :@@@  .-=@@@. *@@*    :@@@.          %@@*          .@@@+=@@@=   -@@@           =@@@      @@@+=@@@+   -@@@    %@@= :@@@.    :::  @@@-    +@@%\n" +
+               "  .@@@@@@@@@@=  +@@# +@@@@- @@@-  =@@@@@@@@@@.  %@@= :@@@-   @@@-   .@@@. =@@%    =@@%           %@@+          .@@@. +@@@.  -@@@           =@@@      @@@: =@@@.  -@@@    %@@=  @@@:   :@@@. #@@*    #@@*\n" +
+               "  +@@%::::+@@@  +@@# .@@@%  @@@-  %@@+::::#@@*  %@@=  *@@%   +@@@=::+@@@.  @@@*::=@@@=           %@@+          .@@@.  %@@*  -@@@------     =@@@      @@@:  %@@#   @@@*::+@@@.  +@@%-.:#@@#  :@@@+::+@@@.\n" +
+               "  @@@=     @@@- +@@#  *@@=  @@@- -@@@.    -@@@. %@@=  .@@@+   *@@@@@@@@*   .%@@@@@@@=            %@@+          .@@@.  -@@@: -@@@@@@@@@.    =@@@      @@@:  :@@@-  -@@@@@@@@=    *@@@@@@@#    -@@@@@@@@: \n" +
+               " :+++      =++= -++=  :++   +++: =++=      +++: +++:   -+++    .=*##*=.      -+##*=.             =++-           +++.   =++= .+++++++++.    :+++      +++.   =+++    =**#*=.      :+*#*+:       =*##*-   \n" +
+               "                                                                                                                                                                                                        \n" +
+               "                                                                                                                                                                                                      ");
+   }
 }
+
