@@ -1,5 +1,6 @@
 package src;
 import src.Cards.Card;
+import src.Players.HumanPlayer;
 import src.Players.Player;
 import src.Cards.Deck;
 
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GameLoop {
-    Player player1 = new Player("null");
+    Player player1 = new HumanPlayer("null");
 
     public void start() {
         //Start game
@@ -39,7 +40,9 @@ public class GameLoop {
         trucodeck.shuffle();
         player1.drawCards(trucodeck);
         defineTurn();
+        //Hardcodeado para probar
         player1.isHand = true;
+        //
         if (player1.isHand) {
             System.out.println(player1.getName() + " eres mano, tu turno.");
             printPlayerHand();
@@ -148,11 +151,9 @@ public class GameLoop {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Has jugado truco.");
-
-        playCard();
-
         // Lógica para que la AI responda al truco
         // ...
+        playCard();
     }
 
     //Jugar carta sin cantar
