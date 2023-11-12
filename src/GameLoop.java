@@ -111,62 +111,48 @@ public class GameLoop {
     //loops de juego de envido y truco
 
     private void playEnvido() {
+
+        System.out.println("Cantaste envido.");
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Elige una opción:");
+        System.out.println("1. Envido");
+        System.out.println("2. Real Envido");
+        System.out.println("3. Falta Envido");
 
-        System.out.println("¿Quieres cantar envido? (S/N)");
-        String respuesta = scanner.nextLine();
+        int opcion = scanner.nextInt();
 
-        if (respuesta.equalsIgnoreCase("S")) {
-            System.out.println("Elige una opción:");
-            System.out.println("1. Envido");
-            System.out.println("2. Real Envido");
-            System.out.println("3. Falta Envido");
-
-            int opcion = scanner.nextInt();
-
-            switch (opcion) {
-                case 1:
-                    // Lógica para el envido
-                    int envidoPoints = player1.calculateEnvidoPoints();
-                    System.out.println("Tienes " + envidoPoints + " puntos de envido.");
-                    break;
-                case 2:
-                    // Lógica para el real envido (misma lógica que el envido)
-                    int realEnvidoPoints = player1.calculateEnvidoPoints();
-                    System.out.println("Tienes " + realEnvidoPoints + " puntos de envido.");
-                    break;
-                case 3:
-                    // Lógica para el falta envido
-                    int faltaEnvidoPoints = 15 - player1.calculateEnvidoPoints(); // Suponiendo que la partida se juega hasta 15 puntos
-                    System.out.println("Te faltan " + faltaEnvidoPoints + " puntos para ganar el envido.");
-                    break;
-                default:
-                    System.out.println("Opción inválida");
-                    break;
-            }
-            // Lógica para que la AI responda al envido
-            // ...
-        } else {
-            System.out.println("No cantaste envido.");
-            playCard();
+        switch (opcion) {
+            case 1:
+                // Lógica para el envido
+                int envidoPoints = player1.calculateEnvidoPoints();
+                System.out.println("Tienes " + envidoPoints + " puntos de envido.");
+                break;
+            case 2:
+                // Lógica para el real envido (misma lógica que el envido)
+                int realEnvidoPoints = player1.calculateEnvidoPoints();
+                System.out.println("Tienes " + realEnvidoPoints + " puntos de envido.");
+                break;
+            case 3:
+                // Lógica para el falta envido
+                int faltaEnvidoPoints = 15 - player1.calculateEnvidoPoints(); // Suponiendo que la partida se juega hasta 15 puntos
+                System.out.println("Te faltan " + faltaEnvidoPoints + " puntos para ganar el envido.");
+                break;
+            default:
+                System.out.println("Opción inválida");
+                break;
         }
+        // Lógica para que la AI responda al envido
+        // ...
     }
-
     private void playTruco() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("¿Quieres jugar truco? (S/N)");
-        String respuesta = scanner.nextLine();
+        System.out.println("Has jugado truco.");
 
-        if (respuesta.equalsIgnoreCase("S")) {
-            // Lógica para jugar al truco
-            System.out.println("Has jugado al truco.");
+        playCard();
 
-            // Lógica para que la AI responda al truco (
-            // ...
-        } else {
-            System.out.println("No has jugado truco.");
-        }
+        // Lógica para que la AI responda al truco
+        // ...
     }
 
     //Jugar carta sin cantar
@@ -185,7 +171,7 @@ public class GameLoop {
         Card SelectedCard1 = hand.get(cardIndex-1);
         System.out.println(SelectedCard1);
         hand.remove(cardIndex-1);
-        System.out.println(hand.size() + " cards remaining");
+        System.out.println("Te quedan "+ hand.size() + " cartas restantes" );
     }
    public void printLogo () {
        System.out.println("                                                                                                                                                                                                        \n" +
