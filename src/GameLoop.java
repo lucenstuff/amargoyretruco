@@ -6,6 +6,7 @@ import src.Cards.Deck;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class GameLoop {
     Player player1 = new Player("null");
 
@@ -80,8 +81,8 @@ public class GameLoop {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Qué deseas hacer?");
-        System.out.println("1. Envido");
-        System.out.println("2. Truco");
+        System.out.println("1. Jugar Envido");
+        System.out.println("2. Jugar Truco");
         System.out.println("3. Jugar una carta");
         System.out.println("4. Irse al mazo");
 
@@ -113,63 +114,49 @@ public class GameLoop {
     private void playEnvido() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("¿Quieres cantar envido? (S/N)");
-        String respuesta = scanner.nextLine();
+        System.out.println("Elige una opción:");
+        System.out.println("1. Envido");
+        System.out.println("2. Real Envido");
+        System.out.println("3. Falta Envido");
 
-        if (respuesta.equalsIgnoreCase("S")) {
-            System.out.println("Elige una opción:");
-            System.out.println("1. Envido");
-            System.out.println("2. Real Envido");
-            System.out.println("3. Falta Envido");
+        int opcion = scanner.nextInt();
 
-            int opcion = scanner.nextInt();
-
-            switch (opcion) {
-                case 1:
-                    // Lógica para el envido
-                    int envidoPoints = player1.calculateEnvidoPoints();
-                    System.out.println("Tienes " + envidoPoints + " puntos de envido.");
-                    break;
-                case 2:
-                    // Lógica para el real envido (misma lógica que el envido)
-                    int realEnvidoPoints = player1.calculateEnvidoPoints();
-                    System.out.println("Tienes " + realEnvidoPoints + " puntos de envido.");
-                    break;
-                case 3:
-                    // Lógica para el falta envido
-                    int faltaEnvidoPoints = 15 - player1.calculateEnvidoPoints(); // Suponiendo que la partida se juega hasta 15 puntos
-                    System.out.println("Te faltan " + faltaEnvidoPoints + " puntos para ganar el envido.");
-                    break;
-                default:
-                    System.out.println("Opción inválida");
-                    break;
-            }
-            // Lógica para que la AI responda al envido
-            // ...
-        } else {
-            System.out.println("No cantaste envido.");
-            playCard();
+        switch (opcion) {
+            case 1:
+                // Lógica para el envido
+                int envidoPoints = player1.calculateEnvidoPoints();
+                System.out.println("Tienes " + envidoPoints + " puntos de envido.");
+                break;
+            case 2:
+                // Lógica para el real envido (misma lógica que el envido)
+                int realEnvidoPoints = player1.calculateEnvidoPoints();
+                System.out.println("Tienes " + realEnvidoPoints + " puntos de envido.");
+                break;
+            case 3:
+                // Lógica para el falta envido
+                int faltaEnvidoPoints = 15 - player1.calculateEnvidoPoints(); // Suponiendo que la partida se juega hasta 15 puntos
+                System.out.println("Te faltan " + faltaEnvidoPoints + " puntos para ganar el envido.");
+                break;
+            default:
+                System.out.println("Opción inválida");
+                break;
         }
+        // Lógica para que la AI responda al envido
+        // ...
     }
 
     private void playTruco() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("¿Quieres jugar truco? (S/N)");
-        String respuesta = scanner.nextLine();
+        System.out.println("Has jugado truco.");
 
-        if (respuesta.equalsIgnoreCase("S")) {
-            // Lógica para jugar al truco
-            System.out.println("Has jugado al truco.");
-
-            // Lógica para que la AI responda al truco (
-            // ...
-        } else {
-            System.out.println("No has jugado truco.");
-        }
+        System.out.println("Elige la carta a jugar");
+        playCard();
     }
 
     //Jugar carta sin cantar
+
+    //Quizás habría que hacer que playCard esté dentro de la clase jugador
     public void playCard(){
         System.out.println(player1.getName()+", Elige la carta a jugar [1,2,3]");
         List<Card> hand = player1.getHand();
