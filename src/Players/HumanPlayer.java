@@ -77,7 +77,6 @@ public class HumanPlayer extends Player {
         // ... (add truco logic)
     }
 
-
     @Override
     public void playCard() {
         List<Card> hand = getHand();

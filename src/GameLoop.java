@@ -3,19 +3,15 @@ import src.Players.CPU;
 import src.Players.HumanPlayer;
 import src.Players.Player;
 import src.Cards.Deck;
-
 import java.util.Random;
 import java.util.Scanner;
 
 public class GameLoop {
     Player player = new HumanPlayer("null");
     CPU cpuPlayer = new CPU("CPU");
-
     boolean playerIsHand = false;
     boolean cpuIsHand = false;
-
     boolean cpuTrucoChant = cpuPlayer.getCpuTrucoChant();
-
     public void start() {
         //Start game
 //        printLogo();
@@ -26,7 +22,6 @@ public class GameLoop {
         // Game loop
         System.out.println("Juego Finalizado.");
     }
-
     private void gameLoop(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Jugador, ingresa tu nombre: ");
@@ -38,9 +33,7 @@ public class GameLoop {
 //        }
         gameUpdate();
     }
-
     private void gameUpdate() {
-
         // Generar mazo y mezclarlo
         Deck trucodeck = new Deck();
         trucodeck.shuffle();
@@ -59,11 +52,7 @@ public class GameLoop {
         }else {
             cpuPlayer.playOptions();
         }
-
-
         //Si no se quiere truco terminar ronda
-
-
 
         //FASE2
 
@@ -84,7 +73,6 @@ public class GameLoop {
 //            endGame();
 //        }
     }
-
     public void defineTrucoWinner(){
         if (player.lastPlaydTrucoValue > cpuPlayer.lastPlaydTrucoValue){
             (player).setScore(+2);
@@ -99,11 +87,27 @@ public class GameLoop {
             cpuPlayer.setScore(+2);
         }
     }
+    public void defineRealEnvidoWinner(){
+        if(player.calculateEnvidoPoints() > cpuPlayer.calculateEnvidoPoints()){
+            player.setScore(+3);
+        } else {
+            cpuPlayer.setScore(+3);
+        }
+    }
+    public void defineFaltaEnvidoWinner(){
+        int points = 0;
+        if(player.calculateEnvidoPoints() > cpuPlayer.calculateEnvidoPoints()){
+            points = 15 - cpuPlayer.getScore();
+            player.setScore(+points);
+        } else {
+            points = 15 - player.getScore();
+            cpuPlayer.setScore(+points);
+        }
+    }
     public void printScore() {
         System.out.println("Puntos "+player.getName() +" :"+ player.getScore()+"\n");
         System.out.println("Puntos "+cpuPlayer.getName() +" :"+ cpuPlayer.getScore()+"\n");
     }
-
     private void defineTurn(){
         int random = new Random().nextInt(2);
         if (random == 0){
@@ -113,18 +117,12 @@ public class GameLoop {
             cpuIsHand = true;
             playerIsHand = false;
         }
-
     }
-
     //Opciones para el jugador
-
 
     //loops de juego de envido y truco
 
-
-
     //Jugar carta sin cantar
-
    public void printLogo () {
        System.out.println("                                                                                                                                                                                                        \n" +
                "      =%%#      =%%%#     .%%%%-      #%%=      #%%%%%#*-      =#@@@%+.     .+%@@%*-         #%%=    *%%*      .%%%%%%#+.   :%%%%%%%%%.-%%%%%%%%%%%  %%%%%%#+:   -%%%    *%%=    =#@@@#+      :*%@@%*.  \n" +
