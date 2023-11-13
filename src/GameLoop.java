@@ -3,15 +3,23 @@ import src.Players.CPU;
 import src.Players.HumanPlayer;
 import src.Players.Player;
 import src.Cards.Deck;
+
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameLoop {
     Player player = new HumanPlayer("null");
     CPU cpuPlayer = new CPU("CPU");
 
+    boolean playerIsHand = player.isHand();
+    boolean cpuIsHand = cpuPlayer.isHand();
+
+
+
+
     public void start() {
         //Start game
-        printLogo();
+//        printLogo();
         System.out.println("Juego Iniciado.");
         System.out.println();
         gameLoop();
@@ -40,22 +48,32 @@ public class GameLoop {
         trucodeck.shuffle();
         player.drawCards(trucodeck);
         cpuPlayer.drawCards(trucodeck);
-        defineTurn();
+//        defineTurn();
+        //FASE 1 - ENVIDO
+        System.out.println(player.getHand()+"\n");
+        if(playerIsHand){
+            player.playOptions();
+        }else {
+            cpuPlayer.playOptions();
+        }
+
+        //FASE2 - TRUCO
+
+        //FASE3 - PUNTOS
 
         //Hardcodeado para probar
-        cpuPlayer.isHand = true;
-        cpuPlayer.playTruco();
+//        cpuPlayer.playTruco();
 
         //
-        if (player.isHand) {
-            System.out.println(player.getName() + " eres mano, tu turno.");
-            printPlayerHand();
-            player.playOptions();
-
-        } else {
-            System.out.println(player.getName() + " no eres mano, aguarda tu turno.");
-            endGame();
-        }
+//        if (player.isHand) {
+//            System.out.println(player.getName() + " eres mano, tu turno.");
+//            printPlayerHand();
+//            player.playOptions();
+//
+//        } else {
+//            System.out.println(player.getName() + " no eres mano, aguarda tu turno.");
+//            endGame();
+//        }
     }
 
 
@@ -68,13 +86,20 @@ public class GameLoop {
     private void printPlayerHand(){
         // Print cards
         System.out.println();
-        System.out.println(player.getName() + " tu mano es: \n" + Player.getHand());
+        System.out.println(player.getName() + " tu mano es: \n" + player.getHand()+"\n");
         System.out.println();
     }
 
     private void defineTurn(){
-        int randomNumber = (int) (Math.random() * 2);
-        player.isHand = randomNumber == 0;
+        int random = new Random().nextInt(2);
+        if (random == 0){
+            playerIsHand = true;
+            cpuIsHand = false;
+        } else {
+            cpuIsHand = true;
+            playerIsHand = false;
+        }
+
     }
 
     //Opciones para el jugador
