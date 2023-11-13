@@ -14,6 +14,8 @@ public class GameLoop {
     boolean playerIsHand = false;
     boolean cpuIsHand = false;
 
+    boolean cpuTrucoChant = cpuPlayer.getCpuTrucoChant();
+
     public void start() {
         //Start game
 //        printLogo();
@@ -46,9 +48,10 @@ public class GameLoop {
         cpuPlayer.drawCards(trucodeck);
         cpuIsHand = true;
 //        defineTurn();
-        //FASE 1 - ENVIDO
 
-        System.out.println(player.getHand()+"\n");
+        //FASE 1
+
+        System.out.println(player.getName() + " tu mano es: \n" + player.getHand()+"\n");
 
         if(playerIsHand){
             player.playOptions();
@@ -56,9 +59,15 @@ public class GameLoop {
             cpuPlayer.playOptions();
         }
 
-        //FASE2 - TRUCO
 
-        //FASE3 - PUNTOS
+        //Si no se quiere truco terminar ronda
+
+
+
+        //FASE2
+
+
+        //FASE3
 
         //Hardcodeado para probar
 //        cpuPlayer.playTruco();
@@ -75,19 +84,31 @@ public class GameLoop {
 //        }
     }
 
+    public void defineTrucoWinner(){
+        if (player.lastPlaydTrucoValue > cpuPlayer.lastPlaydTrucoValue){
+            (player).setScore(+2);
+        } else {
+            (cpuPlayer).setScore(+2);
+        }
+    }
+    public void defineEnvidoWinner(){
+        if(player.calculateEnvidoPoints() > cpuPlayer.calculateEnvidoPoints()){
+            player.setScore(+2);
+        } else {
+            cpuPlayer.setScore(+2);
+        }
+    }
 
     public void endGame() {
         player.setScore(15);
         // Print winner
-        System.out.println("El ganador es: " + player.getName());
+        if (player.getScore() < cpuPlayer.getScore()) {
+            System.out.println("El ganador es: " + cpuPlayer.getName());
+        } else {
+            System.out.println("El ganador es: " + player.getName());
+        }
     }
 
-    private void printPlayerHand(){
-        // Print cards
-        System.out.println();
-        System.out.println(player.getName() + " tu mano es: \n" + player.getHand()+"\n");
-        System.out.println();
-    }
 
     private void defineTurn(){
         int random = new Random().nextInt(2);

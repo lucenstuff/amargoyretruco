@@ -9,6 +9,17 @@ public class CPU extends Player {
         super(name);
     }
 
+    int lastPlayedTrucoValue;
+    boolean cpuTrucoChant = false;
+
+    public boolean getCpuTrucoChant() {
+        return cpuTrucoChant;
+    }
+
+    public void setCpuTrucoChant(boolean cpuTrucoChant) {
+        this.cpuTrucoChant = cpuTrucoChant;
+    }
+
     @Override
     public void playEnvido() {
         System.out.println("CPU juega envido");
@@ -33,6 +44,12 @@ public class CPU extends Player {
                 break;
         }
     }
+
+
+    public boolean isCpuTrucoChant() {
+        return cpuTrucoChant;
+    }
+
     @Override
 
     public void playCard() {
@@ -50,17 +67,14 @@ public class CPU extends Player {
         System.out.println("CPU juega: " + selectedCard);
         System.out.println();
         hand.remove(cardIndex);
+        lastPlayedTrucoValue = selectedCard.trucoValue();
     }
     @Override
 
     public void playTruco() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("CPU le juega truco" + "\n");
-        System.out.println("Elige una opción:");
-        System.out.println("1. Quiero");
-        System.out.println("2. Quiero Retruco");
-        System.out.println("3. No Quiero");
-
+        cpuTrucoChant = true;
         // Wait for the player's response
         String response = scanner.nextLine();
 
