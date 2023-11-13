@@ -91,75 +91,74 @@ public abstract class Player {
 
     // Envido Methods
     public int calculateEnvidoPoints() {
-        // ... (unchanged)
-        return 0;
+        int envidoPoints = 0;
+        boolean hasThreeSameSuit = false;
+
+        if (hand.size() >= 3) {
+            Card card1 = hand.get(0);
+            Card card2 = hand.get(1);
+            Card card3 = hand.get(2);
+
+            // Check if all three cards have the same suit
+            if (card1.getSuit().equals(card2.getSuit()) && card2.getSuit().equals(card3.getSuit())) {
+                hasThreeSameSuit = true;
+            }
+        }
+
+        if (hasThreeSameSuit) {
+            int maxEnvidoValue = hand.get(0).envidoValue();
+            int secondMaxEnvidoValue = 0;
+            for (int i = 1; i < hand.size(); i++) {
+                int currentEnvidoValue = hand.get(i).envidoValue();
+                if (currentEnvidoValue > maxEnvidoValue) {
+                    secondMaxEnvidoValue = maxEnvidoValue;
+                    maxEnvidoValue = currentEnvidoValue;
+                } else if (currentEnvidoValue > secondMaxEnvidoValue) {
+                    secondMaxEnvidoValue = currentEnvidoValue;
+                }
+            }
+            envidoPoints = 20 + maxEnvidoValue + secondMaxEnvidoValue;
+        } else {
+            for (int i = 0; i < hand.size(); i++) {
+                Card card1 = hand.get(i);
+                for (int j = i + 1; j < hand.size(); j++) {
+                    Card card2 = hand.get(j);
+                    if (card1.getSuit().equals(card2.getSuit())) {
+                        envidoPoints += 20 + (card1.envidoValue() + card2.envidoValue());
+                    }
+                }
+            }
+
+            if (envidoPoints == 0) {
+                int maxEnvidoValue = 0;
+                for (Card card : hand) {
+                    int currentEnvidoValue = card.envidoValue();
+                    if (currentEnvidoValue > maxEnvidoValue) {
+                        maxEnvidoValue = currentEnvidoValue;
+                    }
+                }
+                envidoPoints = maxEnvidoValue;
+            }
+        }
+
+        System.out.println("Envido Points: " + envidoPoints);
+        return envidoPoints;
     }
 
     public void playEnvido() {
-        // ... (unchanged)
     }
 
     // Truco Methods
     public void playTruco() {
-        System.out.println("Cantaste truco.");
-        // ... (add truco logic)
     }
 
     // Card Playing Methods
     public void playCard() {
-        List<Card> hand = getHand();
-
-        if (hand.isEmpty()) {
-            System.out.println("No tienes cartas en la mano.");
-            return;
-        }
-
-        System.out.println(", Elige la carta a jugar [1, 2, 3]");
-        int cardIndex = new Scanner(System.in).nextInt();
-
-        if (cardIndex < 1 || cardIndex > hand.size()) {
-            System.out.println("Seleccionaste una carta inexistente.");
-            System.out.println("Inténtalo de nuevo.");
-            System.out.println();
-            playCard();
-            return;
-        }
-
-        Card selectedCard = hand.get(cardIndex - 1);
-        System.out.println(selectedCard);
-        hand.remove(cardIndex - 1);
-        System.out.println("Te quedan " + hand.size() + " cartas restantes");
     }
 
     // General Gameplay Methods
     public void playOptions() {
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Qué deseas hacer?");
-        System.out.println("1. Envido");
-        System.out.println("2. Truco");
-        System.out.println("3. Jugar una carta");
-        System.out.println("4. Irse al mazo");
-
-        int option = scanner.nextInt();
-
-        switch (option) {
-            case 1:
-                playEnvido();
-                break;
-            case 2:
-                playTruco();
-                break;
-            case 3:
-                playCard();
-                break;
-            case 4:
-                endTurn();
-                break;
-            default:
-                System.out.println("Opción inválida");
-                break;
-        }
     }
 
     public void endTurn() {

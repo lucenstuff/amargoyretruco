@@ -46,6 +46,8 @@ public class GameLoop {
         cpuPlayer.drawCards(trucodeck);
 //        defineTurn();
         System.out.println(player.getHand());
+        player.playOptions();
+
 
         //Hardcodeado para probar
 //        cpuPlayer.playTruco();
