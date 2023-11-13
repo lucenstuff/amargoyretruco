@@ -5,6 +5,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class CPU extends Player {
+
+    int playerResponse = 0;
     public CPU(String name) {
         super(name);
     }
@@ -75,36 +77,36 @@ public class CPU extends Player {
         Scanner scanner = new Scanner(System.in);
         System.out.println("CPU le juega truco" + "\n");
         cpuTrucoChant = true;
+        Scanner trucoResponse = new Scanner(System.in);
         // Wait for the player's response
-        String response = scanner.nextLine();
+        System.out.println("Elige una opción:");
+        System.out.println("1. Quiero");
+        System.out.println("2. Quiero retruco");
+        System.out.println("3. No Quiero");
 
-        System.out.println();
-        // Use a switch statement to handle different responses
-        switch (response) {
-            case "option1":
-                // Quiero
-                playCard();
+        int playerResponse = scanner.nextInt();
+
+        //Obtener respuesta del jugador
+        switch (playerResponse) {
+
+            case 0:
+                //Quiero
                 break;
-            case "option2":
-                // Quiero Retruco
-                int random = new Random().nextInt(2);
+            case 1:
+                //Esperar respuesta de cpu
 
-                if (random == 0) {
-                System.out.println("CPU: Quiero Vale 4");
-                }
                 break;
-            case "option3":
-                // No Quiero
-                playCard();
-
+            case 2:
+                //No quiero
+                //End Turn
                 break;
             default:
-                // Handle other responses
+                System.out.println("Opción inválida");
+                break;
         }
-        //Repartir puntos
-        // Play the card after the player responds
-        playCard();
     }
+
+
 
     @Override
     public void endTurn(){

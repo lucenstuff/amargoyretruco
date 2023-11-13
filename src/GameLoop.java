@@ -45,41 +45,32 @@ public class GameLoop {
 
         //FASE 1
 
-        System.out.println(player.getName() + " tu mano es: \n" + player.getHand()+"\n");
+        System.out.println(player.getName() + " tu mano es: \n" + player.getHand() + "\n");
 
-        if(playerIsHand){
+        if (playerIsHand) {
             player.playOptions();
-        }else {
-            cpuPlayer.playOptions();
+        } else {
+            cpuPlayer.playTruco();
         }
+        Scanner scanner = new Scanner(System.in);
+        int response = scanner.nextInt();
+
+
         //Si no se quiere truco terminar ronda
-
         //FASE2
-
-
         //FASE3
-
-        //Hardcodeado para probar
-//        cpuPlayer.playTruco();
-
-        //
-//        if (player.isHand) {
-//            System.out.println(player.getName() + " eres mano, tu turno.");
-//            printPlayerHand();
-//            player.playOptions();
-//
-//        } else {
-//            System.out.println(player.getName() + " no eres mano, aguarda tu turno.");
-//            endGame();
-//        }
     }
+
     public void defineTrucoWinner(){
         if (player.lastPlaydTrucoValue > cpuPlayer.lastPlaydTrucoValue){
             (player).setScore(+2);
+            System.out.println(player.getName() + " gana el truco");
         } else {
             (cpuPlayer).setScore(+2);
         }
     }
+
+
     public void defineEnvidoWinner(){
         if(player.calculateEnvidoPoints() > cpuPlayer.calculateEnvidoPoints()){
             player.setScore(+2);
