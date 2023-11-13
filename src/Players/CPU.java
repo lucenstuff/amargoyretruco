@@ -58,6 +58,8 @@ public class CPU extends Player {
 
         // Wait for the player's response
         String response = scanner.nextLine();
+
+        System.out.println();
         // Use a switch statement to handle different responses
         switch (response) {
             case "option1":
@@ -70,10 +72,6 @@ public class CPU extends Player {
 
                 if (random == 0) {
                 System.out.println("CPU: Quiero Vale 4");
-                //Esperar respuesta jugador
-
-                }else {
-                    System.out.println("CPU: No Quiero");
                 }
                 break;
             case "option3":

@@ -1,16 +1,13 @@
 package src;
-import src.Cards.Card;
 import src.Players.CPU;
 import src.Players.HumanPlayer;
 import src.Players.Player;
 import src.Cards.Deck;
-
-import java.util.List;
 import java.util.Scanner;
 
 public class GameLoop {
-    Player player1 = new HumanPlayer("null");
-    CPU cpu = new CPU("CPU");
+    Player player = new HumanPlayer("null");
+    CPU cpuPlayer = new CPU("CPU");
 
     public void start() {
         //Start game
@@ -26,7 +23,7 @@ public class GameLoop {
     private void gameLoop(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Jugador, ingresa tu nombre: ");
-        player1.setName(scanner.nextLine());
+        player.setName(scanner.nextLine());
 
         //implementar while loop una vez el algoritmo esté listo
 //        while ((player1.getScore() < 15 || player1.getScore() < 15)) {
@@ -41,45 +38,43 @@ public class GameLoop {
         // Generar mazo y mezclarlo
         Deck trucodeck = new Deck();
         trucodeck.shuffle();
-        player1.drawCards(trucodeck);
-        cpu.drawCards(trucodeck);
+        player.drawCards(trucodeck);
+        cpuPlayer.drawCards(trucodeck);
         defineTurn();
 
         //Hardcodeado para probar
-        cpu.isHand = true;
-        cpu.playTruco();
+        cpuPlayer.isHand = true;
+        cpuPlayer.playTruco();
+
         //
-        if (player1.isHand) {
-            System.out.println(player1.getName() + " eres mano, tu turno.");
+        if (player.isHand) {
+            System.out.println(player.getName() + " eres mano, tu turno.");
             printPlayerHand();
-            Player.playOptions();
+            player.playOptions();
 
         } else {
-            System.out.println(player1.getName() + " no eres mano, aguarda tu turno.");
+            System.out.println(player.getName() + " no eres mano, aguarda tu turno.");
             endGame();
         }
     }
 
-    public static void CPUplaysCard() {
-        CPU.playCard();
-    }
 
     public void endGame() {
-        player1.setScore(15);
+        player.setScore(15);
         // Print winner
-        System.out.println("El ganador es: " + player1.getName());
+        System.out.println("El ganador es: " + player.getName());
     }
 
     private void printPlayerHand(){
         // Print cards
         System.out.println();
-        System.out.println(player1.getName() + " tu mano es: \n" + Player.getHand());
+        System.out.println(player.getName() + " tu mano es: \n" + Player.getHand());
         System.out.println();
     }
 
     private void defineTurn(){
         int randomNumber = (int) (Math.random() * 2);
-        player1.isHand = randomNumber == 0;
+        player.isHand = randomNumber == 0;
     }
 
     //Opciones para el jugador
