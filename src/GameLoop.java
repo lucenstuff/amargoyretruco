@@ -47,6 +47,7 @@ public class GameLoop {
         player.drawCards(trucodeck);
         cpuPlayer.drawCards(trucodeck);
         cpuIsHand = true;
+        printScore();
 //        defineTurn();
 
         //FASE 1
@@ -98,17 +99,10 @@ public class GameLoop {
             cpuPlayer.setScore(+2);
         }
     }
-
-    public void endGame() {
-        player.setScore(15);
-        // Print winner
-        if (player.getScore() < cpuPlayer.getScore()) {
-            System.out.println("El ganador es: " + cpuPlayer.getName());
-        } else {
-            System.out.println("El ganador es: " + player.getName());
-        }
+    public void printScore() {
+        System.out.println("Puntos "+player.getName() +" :"+ player.getScore()+"\n");
+        System.out.println("Puntos "+cpuPlayer.getName() +" :"+ cpuPlayer.getScore()+"\n");
     }
-
 
     private void defineTurn(){
         int random = new Random().nextInt(2);
