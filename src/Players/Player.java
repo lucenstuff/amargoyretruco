@@ -4,6 +4,7 @@ import src.Cards.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public abstract class Player {
     private String name;
@@ -30,7 +31,7 @@ public abstract class Player {
         this.numCards = numCards;
     }
 
-    private List<Card> hand;
+    private static List<Card> hand;
     private int score;
     int numCards = 3;
 
@@ -53,7 +54,7 @@ public abstract class Player {
         }
     }
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void updateScore(int points) {
@@ -65,7 +66,7 @@ public abstract class Player {
     }
 
 
-    public List<Card> getHand() {
+    public static List<Card> getHand() {
         return hand;
     }
 
@@ -81,7 +82,7 @@ public abstract class Player {
         deck.removeCard(hand);
     }
 
-    public int calculateEnvidoPoints() {
+    public static int calculateEnvidoPoints() {
         int envidoPoints = 0;
         boolean hasThreeSameSuit = false;
 
@@ -134,6 +135,67 @@ public abstract class Player {
 
         System.out.println("Envido Points: " + envidoPoints);
         return envidoPoints;
+    }
+
+    public static void playEnvido() {
+        System.out.println("Cantaste envido.");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Elige una opción:");
+        System.out.println("1. Envido");
+        System.out.println("2. Real Envido");
+        System.out.println("3. Falta Envido");
+
+        int option = scanner.nextInt();
+
+        switch (option) {
+            case 1:
+                int envidoPoints = calculateEnvidoPoints();
+                System.out.println("Tienes " + envidoPoints + " puntos de envido.");
+                break;
+            case 2:
+                int realEnvidoPoints = calculateEnvidoPoints();
+                System.out.println("Tienes " + realEnvidoPoints + " puntos de envido.");
+                break;
+            case 3:
+                int faltaEnvidoPoints = 15 - calculateEnvidoPoints();
+                System.out.println("Te faltan " + faltaEnvidoPoints + " puntos para ganar el envido.");
+                break;
+            default:
+                System.out.println("Opción inválida");
+                break;
+        }
+    }
+
+    public static void playTruco() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Has jugado truco.");
+        // Logic to respond to the truco
+        // ...
+    }
+
+    public static void playCard() {
+        List<Card> hand = getHand();
+
+        if (hand.isEmpty()) {
+            System.out.println("No tienes cartas en la mano.");
+            return;
+        }
+
+        System.out.println(", Elige la carta a jugar [1,2,3]");
+        int cardIndex = new Scanner(System.in).nextInt();
+
+        if (cardIndex < 1 || cardIndex > hand.size()) {
+            System.out.println("Seleccionaste una carta inexistente.");
+            System.out.println("Intentalo de nuevo.");
+            System.out.println();
+            playCard();
+            return;
+        }
+
+        Card selectedCard = hand.get(cardIndex - 1);
+        System.out.println(selectedCard);
+        hand.remove(cardIndex - 1);
+        System.out.println("Te quedan " + hand.size() + " cartas restantes");
     }
 
 }

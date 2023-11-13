@@ -1,7 +1,7 @@
 package src.Players;
 
-public class CPU  extends Player {
-    public CPU(String name) {
-        super(name);
-    }
-}
+import src.Cards.*;
+
+import java.util.List;
+import java.util.Random;
+
