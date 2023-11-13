@@ -10,7 +10,6 @@ public abstract class Player {
     private List<Card> hand;
     private int score;
     private int numCards = 3;
-    public boolean isHand;
 
     public Player(String name) {
         this.name = name;
@@ -35,17 +34,10 @@ public abstract class Player {
         return numCards;
     }
 
-    public void setHand(boolean hand) {
-        isHand = hand;
-    }
-
     public List<Card> getHand() {
         return hand;
     }
 
-    public boolean isHand() {
-        return isHand;
-    }
 
     public void setHand(List<Card> hand) {
         this.hand = hand;

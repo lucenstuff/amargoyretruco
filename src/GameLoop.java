@@ -11,11 +11,8 @@ public class GameLoop {
     Player player = new HumanPlayer("null");
     CPU cpuPlayer = new CPU("CPU");
 
-    boolean playerIsHand = player.isHand();
-    boolean cpuIsHand = cpuPlayer.isHand();
-
-
-
+    boolean playerIsHand = false;
+    boolean cpuIsHand = false;
 
     public void start() {
         //Start game
@@ -38,7 +35,6 @@ public class GameLoop {
 //            // Update game logic
 //        }
         gameUpdate();
-
     }
 
     private void gameUpdate() {
@@ -48,9 +44,12 @@ public class GameLoop {
         trucodeck.shuffle();
         player.drawCards(trucodeck);
         cpuPlayer.drawCards(trucodeck);
+        cpuIsHand = true;
 //        defineTurn();
         //FASE 1 - ENVIDO
+
         System.out.println(player.getHand()+"\n");
+
         if(playerIsHand){
             player.playOptions();
         }else {

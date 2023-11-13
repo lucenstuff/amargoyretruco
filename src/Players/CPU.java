@@ -11,7 +11,8 @@ public class CPU extends Player {
 
     @Override
     public void playEnvido() {
-        //Lógica envido IA
+        System.out.println("CPU juega envido");
+        //Esperar al quiero y no quiero
     }
     @Override
 
@@ -54,7 +55,7 @@ public class CPU extends Player {
 
     public void playTruco() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("CPU le juega truco");
+        System.out.println("CPU le juega truco" + "\n");
         System.out.println("Elige una opción:");
         System.out.println("1. Quiero");
         System.out.println("2. Quiero Retruco");
@@ -89,5 +90,11 @@ public class CPU extends Player {
         //Repartir puntos
         // Play the card after the player responds
         playCard();
+    }
+
+    @Override
+    public void endTurn(){
+        System.out.println("CPU se va al mazo: ");
+        //Repartir puntos
     }
 }
