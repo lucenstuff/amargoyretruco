@@ -137,6 +137,39 @@ public abstract class Player {
         return envidoPoints;
     }
 
+    public void playOptions() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Qué deseas hacer?");
+        System.out.println("1. Envido");
+        System.out.println("2. Truco");
+        System.out.println("3. Jugar una carta");
+        System.out.println("4. Irse al mazo");
+
+        int option = scanner.nextInt();
+
+        switch (option) {
+            case 1:
+                HumanPlayer.playEnvido();
+                break;
+            case 2:
+                HumanPlayer.playTruco();
+                break;
+            case 3:
+                HumanPlayer.playCard();
+                break;
+            case 4:
+                endTurn();
+                break;
+            default:
+                System.out.println("Opción inválida");
+                break;
+        }
+    }
+    public void endTurn(){
+        //Lógica para irse al mazo
+    }
+
     public static void playEnvido() {
         System.out.println("Cantaste envido.");
         Scanner scanner = new Scanner(System.in);
@@ -197,5 +230,6 @@ public abstract class Player {
         hand.remove(cardIndex - 1);
         System.out.println("Te quedan " + hand.size() + " cartas restantes");
     }
+
 
 }

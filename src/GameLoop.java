@@ -1,5 +1,6 @@
 package src;
 import src.Cards.Card;
+import src.Players.CPU;
 import src.Players.HumanPlayer;
 import src.Players.Player;
 import src.Cards.Deck;
@@ -9,6 +10,7 @@ import java.util.Scanner;
 
 public class GameLoop {
     Player player1 = new HumanPlayer("null");
+    CPU cpu = new CPU("CPU");
 
     public void start() {
         //Start game
@@ -32,26 +34,34 @@ public class GameLoop {
 //        }
         defineTurn();
         gameUpdate();
+
     }
 
     private void gameUpdate() {
+
         // Generar mazo y mezclarlo
         Deck trucodeck = new Deck();
         trucodeck.shuffle();
         player1.drawCards(trucodeck);
+        cpu.drawCards(trucodeck);
         defineTurn();
+
         //Hardcodeado para probar
         player1.isHand = true;
         //
         if (player1.isHand) {
             System.out.println(player1.getName() + " eres mano, tu turno.");
             printPlayerHand();
-            playOptions();
+            player1.playOptions();
 
         } else {
             System.out.println(player1.getName() + " no eres mano, aguarda tu turno.");
             endGame();
         }
+    }
+
+    public static void CPUplaysCard() {
+        CPU.playCard();
     }
 
     public void endGame() {
@@ -79,38 +89,7 @@ public class GameLoop {
 
     //Opciones para el jugador
 
-    private void playOptions() {
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Qué deseas hacer?");
-        System.out.println("1. Envido");
-        System.out.println("2. Truco");
-        System.out.println("3. Jugar una carta");
-        System.out.println("4. Irse al mazo");
-
-        int option = scanner.nextInt();
-
-        switch (option) {
-            case 1:
-                HumanPlayer.playEnvido();
-                break;
-            case 2:
-                HumanPlayer.playTruco();
-                break;
-            case 3:
-                HumanPlayer.playCard();
-                break;
-            case 4:
-                endTurn();
-                break;
-            default:
-                System.out.println("Opción inválida");
-                break;
-        }
-    }
-    public void endTurn(){
-        //Lógica para irse al mazo
-    }
     //loops de juego de envido y truco
 
 
