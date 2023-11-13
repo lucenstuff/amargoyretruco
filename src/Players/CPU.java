@@ -86,8 +86,7 @@ public class CPU extends Player {
             default:
                 // Handle other responses
         }
-
-
+        //Repartir puntos
         // Play the card after the player responds
         playCard();
     }
