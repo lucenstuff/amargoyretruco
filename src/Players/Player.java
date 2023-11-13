@@ -137,7 +137,7 @@ public abstract class Player {
         return envidoPoints;
     }
 
-    public void playOptions() {
+    public static void playOptions() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Qué deseas hacer?");
@@ -166,9 +166,10 @@ public abstract class Player {
                 break;
         }
     }
-    public void endTurn(){
+    public static void endTurn(){
         //Lógica para irse al mazo
     }
+
 
     public static void playEnvido() {
         System.out.println("Cantaste envido.");
@@ -200,10 +201,7 @@ public abstract class Player {
     }
 
     public static void playTruco() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Has jugado truco.");
-        // Logic to respond to the truco
-        // ...
+        System.out.println("Cantaste truco.");
     }
 
     public static void playCard() {

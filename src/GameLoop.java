@@ -16,7 +16,7 @@ public class GameLoop {
         //Start game
         printLogo();
         System.out.println("Juego Iniciado.");
-        System.out.println("");
+        System.out.println();
         gameLoop();
         // Initialize players and deck
         // Game loop
@@ -32,7 +32,6 @@ public class GameLoop {
 //        while ((player1.getScore() < 15 || player1.getScore() < 15)) {
 //            // Update game logic
 //        }
-        defineTurn();
         gameUpdate();
 
     }
@@ -47,12 +46,13 @@ public class GameLoop {
         defineTurn();
 
         //Hardcodeado para probar
-        player1.isHand = true;
+        cpu.isHand = true;
+        cpu.playTruco();
         //
         if (player1.isHand) {
             System.out.println(player1.getName() + " eres mano, tu turno.");
             printPlayerHand();
-            player1.playOptions();
+            Player.playOptions();
 
         } else {
             System.out.println(player1.getName() + " no eres mano, aguarda tu turno.");
@@ -73,18 +73,13 @@ public class GameLoop {
     private void printPlayerHand(){
         // Print cards
         System.out.println();
-        System.out.println(player1.getName() + " tu mano es: \n" + player1.getHand());
+        System.out.println(player1.getName() + " tu mano es: \n" + Player.getHand());
         System.out.println();
     }
 
     private void defineTurn(){
         int randomNumber = (int) (Math.random() * 2);
-        if (randomNumber == 0) {
-            player1.isHand = true;
-
-        } else {
-            player1.isHand = false;
-        }
+        player1.isHand = randomNumber == 0;
     }
 
     //Opciones para el jugador
