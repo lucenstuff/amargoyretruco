@@ -9,11 +9,13 @@ public class CPU extends Player {
         super(name);
     }
 
-    public static void playEnvido() {
+    @Override
+    public void playEnvido() {
         //Lógica envido IA
     }
+    @Override
 
-    public static void playOptions(){
+    public void playOptions(){
         Random random = new Random();
         int option = random.nextInt(3);
         switch (option) {
@@ -30,8 +32,9 @@ public class CPU extends Player {
                 break;
         }
     }
+    @Override
 
-    public static void playCard() {
+    public void playCard() {
         List<Card> hand = getHand();
 
         if (hand.isEmpty()) {
@@ -47,8 +50,9 @@ public class CPU extends Player {
         System.out.println();
         hand.remove(cardIndex);
     }
+    @Override
 
-    public static void playTruco() {
+    public void playTruco() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("CPU le juega truco");
         System.out.println("Elige una opción:");
@@ -82,7 +86,6 @@ public class CPU extends Player {
             default:
                 // Handle other responses
         }
-
 
 
         // Play the card after the player responds

@@ -9,9 +9,13 @@ public class GameLoop {
     Player player = new HumanPlayer("null");
     CPU cpuPlayer = new CPU("CPU");
 
+    boolean playerIsHand = player.isHand();
+    boolean cpuIsHand = cpuPlayer.isHand();
+
+
     public void start() {
         //Start game
-        printLogo();
+//        printLogo();
         System.out.println("Juego Iniciado.");
         System.out.println();
         gameLoop();
@@ -40,22 +44,22 @@ public class GameLoop {
         trucodeck.shuffle();
         player.drawCards(trucodeck);
         cpuPlayer.drawCards(trucodeck);
-        defineTurn();
+//        defineTurn();
+        System.out.println(player.getHand());
 
         //Hardcodeado para probar
-        cpuPlayer.isHand = true;
-        cpuPlayer.playTruco();
+//        cpuPlayer.playTruco();
 
         //
-        if (player.isHand) {
-            System.out.println(player.getName() + " eres mano, tu turno.");
-            printPlayerHand();
-            player.playOptions();
-
-        } else {
-            System.out.println(player.getName() + " no eres mano, aguarda tu turno.");
-            endGame();
-        }
+//        if (player.isHand) {
+//            System.out.println(player.getName() + " eres mano, tu turno.");
+//            printPlayerHand();
+//            player.playOptions();
+//
+//        } else {
+//            System.out.println(player.getName() + " no eres mano, aguarda tu turno.");
+//            endGame();
+//        }
     }
 
 
@@ -68,7 +72,7 @@ public class GameLoop {
     private void printPlayerHand(){
         // Print cards
         System.out.println();
-        System.out.println(player.getName() + " tu mano es: \n" + Player.getHand());
+        System.out.println(player.getName() + " tu mano es: \n" + player.getHand());
         System.out.println();
     }
 
