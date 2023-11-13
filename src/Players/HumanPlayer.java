@@ -1,9 +1,8 @@
 package src.Players;
-
 import src.Cards.Card;
-
 import java.util.List;
 import java.util.Scanner;
+
 
 public class HumanPlayer extends Player {
     public HumanPlayer(String name) {
@@ -68,15 +67,16 @@ public class HumanPlayer extends Player {
             default:
                 System.out.println("Opción inválida");
                 break;
-
         }
     }
 
     @Override
     public void playTruco() {
         System.out.println("Cantaste Truco.");
+
         // ... (add truco logic)
     }
+
 
     @Override
     public void playCard() {
@@ -100,6 +100,7 @@ public class HumanPlayer extends Player {
 
         Card selectedCard = hand.get(cardIndex - 1);
         System.out.println(selectedCard);
+        this.lastPlaydTrucoValue = selectedCard.trucoValue();
         hand.remove(cardIndex - 1);
         System.out.println("Te quedan " + hand.size() + " cartas restantes");
     }

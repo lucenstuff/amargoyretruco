@@ -3,9 +3,18 @@ package src.Players;
 import src.Cards.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public abstract class Player {
+    public int lastPlaydTrucoValue = 0;
+
+    public int getLastPlaydTrucoValue() {
+        return lastPlaydTrucoValue;
+    }
+
+    public void setLastPlaydTrucoValue(int lastPlaydTrucoValue) {
+        this.lastPlaydTrucoValue = lastPlaydTrucoValue;
+    }
+
     private String name;
     private List<Card> hand;
     private int score;
@@ -156,4 +165,5 @@ public abstract class Player {
     public void endTurn() {
         // ... (add logic for ending the turn)
     }
+
 }
