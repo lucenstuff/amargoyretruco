@@ -2,34 +2,41 @@ package src.Players;
 import src.Cards.*;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 public class CPU extends Player {
-
-    int playerResponse = 0;
     public CPU(String name) {
         super(name);
     }
 
     int lastPlayedTrucoValue;
-    boolean cpuTrucoChant = false;
-
-    public boolean getCpuTrucoChant() {
-        return cpuTrucoChant;
-    }
-
-    public void setCpuTrucoChant(boolean cpuTrucoChant) {
-        this.cpuTrucoChant = cpuTrucoChant;
-    }
 
     @Override
     public void playEnvido() {
         System.out.println("CPU juega envido");
-        //Esperar al quiero y no quiero
-    }
-    @Override
+        boolean cpuAcceptsEnvido = respondToEnvido();
 
-    public void playOptions(){
+        if (cpuAcceptsEnvido) {
+            // La CPU acepta el Envido, puedes implementar la lógica adicional aquí
+        } else {
+            // La CPU no acepta el Envido, puedes implementar la lógica adicional aquí
+        }
+    }
+
+    public boolean respondToEnvido() {
+        boolean cpuAcceptsEnvido = generateBooleanResponse();
+        System.out.println("La CPU responde al canto de Envido: " + (cpuAcceptsEnvido ? "Quiero" : "No Quiero"));
+        return cpuAcceptsEnvido;
+    }
+
+    public boolean respondToTruco() {
+        boolean cpuAcceptsTruco = generateBooleanResponse();
+        System.out.println("La CPU responde al canto de Truco: " + (cpuAcceptsTruco ? "Quiero" : "No Quiero"));
+        return cpuAcceptsTruco;
+    }
+
+
+    @Override
+    public void playOptions() {
         Random random = new Random();
         int option = random.nextInt(3);
         switch (option) {
@@ -47,65 +54,54 @@ public class CPU extends Player {
         }
     }
 
-
-    public boolean isCpuTrucoChant() {
-        return cpuTrucoChant;
-    }
-
     @Override
-
-    public void playCard() {
-        List<Card> hand = getHand();
+    public Card playCard() {
+        List<Card> hand = this.getHand();
+        System.out.println(this.getHand());
 
         if (hand.isEmpty()) {
-            return;
+            System.out.println("CPU No tiene cartas en la mano.");
+            return null;
         }
 
         Random random = new Random();
         int cardIndex = random.nextInt(hand.size());
 
         Card selectedCard = hand.get(cardIndex);
-        System.out.println();
-        System.out.println("CPU juega: " + selectedCard);
-        System.out.println();
-        hand.remove(cardIndex);
-        lastPlayedTrucoValue = selectedCard.trucoValue();
+        System.out.println(selectedCard);
+        this.lastPlayedTrucoValue = selectedCard.trucoValue();
+        System.out.println(selectedCard.trucoValue());
+        hand.remove(cardIndex - 1);
+        System.out.println("A la CPU le quedan " + hand.size() + " cartas restantes");
+        return selectedCard;
     }
+
     @Override
-
     public void playTruco() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("CPU le juega truco" + "\n");
-        cpuTrucoChant = true;
-        Scanner trucoResponse = new Scanner(System.in);
-        // Wait for the player's response
-        System.out.println("Elige una opción:");
+        System.out.println("La CPU le canta truco.");
+        System.out.println("Qué deseas hacer?");
         System.out.println("1. Quiero");
-        System.out.println("2. Quiero retruco");
-        System.out.println("3. No Quiero");
+        System.out.println("2. No Quiero");
+//        Scanner playerResponse = new Scanner(System.in);
+//
+//        switch (playerResponse) {
+//            case 1:
+//                System.out.println("CPU juega: ");
+//                this.playCard();
+//                break;
+//            case 2:
+//
+//                break;
+//            default:
+//                break;
+//        }
 
-        int playerResponse = scanner.nextInt();
-
-        //Obtener respuesta del jugador
-        switch (playerResponse) {
-
-            case 0:
-                //Quiero
-                break;
-            case 1:
-                //Esperar respuesta de cpu
-
-                break;
-            case 2:
-                //No quiero
-                //End Turn
-                break;
-            default:
-                System.out.println("Opción inválida");
-                break;
-        }
     }
 
+    public boolean generateBooleanResponse(){
+       Random nextBoolean = new Random();
+        return nextBoolean.nextBoolean();
+    }
 
 
     @Override
@@ -113,4 +109,7 @@ public class CPU extends Player {
         System.out.println("CPU se va al mazo: ");
         //Repartir puntos
     }
+
+    //COMENTARIO RANDOM
+
 }

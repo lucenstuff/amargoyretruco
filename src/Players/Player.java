@@ -3,9 +3,64 @@ package src.Players;
 import src.Cards.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public abstract class Player {
     public int lastPlaydTrucoValue = 0;
+
+    public int playerResponse = 0;
+
+    public int getPlayerResponse() {
+        return playerResponse;
+    }
+
+    private boolean trucoChant = false;
+
+    private boolean reTrucoChant = false;
+
+    private boolean valeCuatroChant = false;
+
+    public boolean isTrucoChant() {
+        return trucoChant;
+    }
+
+    public boolean isReTrucoChant() {
+        return reTrucoChant;
+    }
+
+    public void setReTrucoChant(boolean reTrucoChant) {
+        this.reTrucoChant = reTrucoChant;
+    }
+
+    public boolean isValeCuatroChant() {
+        return valeCuatroChant;
+    }
+
+    public void setValeCuatroChant(boolean valeCuatroChant) {
+        this.valeCuatroChant = valeCuatroChant;
+    }
+
+    private boolean isHand = false;
+
+    public boolean getIsHand() {
+        return isHand;
+    }
+
+    public void setIsHand(boolean isHand) {
+        this.isHand = isHand;
+    }
+
+    public boolean getTrucoChant() {
+        return trucoChant;
+    }
+
+    public void setTrucoChant(boolean trucoChant) {
+        this.trucoChant = trucoChant;
+    }
+
+    public void setPlayerResponse(int playerResponse) {
+        this.playerResponse = playerResponse;
+    }
 
     public int getLastPlaydTrucoValue() {
         return lastPlaydTrucoValue;
@@ -145,17 +200,29 @@ public abstract class Player {
         System.out.println("Envido Points: " + envidoPoints);
         return envidoPoints;
     }
-
-    public void playEnvido() {
-    }
-
     // Truco Methods
     public void playTruco() {
+
+    }
+
+    public boolean respondToTruco() {
+        boolean playerAcceptsTruco = false;
+        Scanner scanner = new Scanner(System.in);
+        String playerResponse = scanner.nextLine();
+        if (playerResponse.equalsIgnoreCase("S")) {
+            playerAcceptsTruco = true;
+        } else if (playerResponse.equalsIgnoreCase("N")) {
+            playerAcceptsTruco = false;
+        }
+        return playerAcceptsTruco;
     }
 
     // Card Playing Methods
-    public void playCard() {
+    public Card playCard() {
+        return null;
     }
+
+    public abstract void playEnvido();
 
     // General Gameplay Methods
     public void playOptions() {
@@ -165,5 +232,4 @@ public abstract class Player {
     public void endTurn() {
         // ... (add logic for ending the turn)
     }
-
 }
