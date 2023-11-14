@@ -1,133 +1,66 @@
 package src;
-import src.Cards.Card;
-import src.Players.Player;
+import src.Players.CPU;
+import src.Players.HumanPlayer;
 import src.Cards.Deck;
-import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameLoop {
-    private boolean isRunning;
-    boolean player1EnvidoChant = false;
-    boolean player2EnvidoChant = false;
-    boolean player1TrucoChant = false;
-    boolean player2TrucoChant = false;
-
-    Player player1 = new Player("null");
-    Player player2 = new Player("null");
-
+    HumanPlayer player = new HumanPlayer("null");
+    CPU cpuPlayer = new CPU("CPU");
+    RoundManager roundManager = new RoundManager(player, cpuPlayer, new TurnManager());
+    GUI gui = new GUI(player, cpuPlayer);
     public void start() {
-        //Start game
-        isRunning = true;
-        System.out.println("Juego Iniciado.");
+        printLogo();
+        System.out.println("Juego Iniciado."+"\n");
+        roundManager.defineFirstHand();
         gameLoop();
-        // Initialize players and deck
-        // Game loop
         System.out.println("Juego Finalizado.");
     }
-
     private void gameLoop(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Jugador, ingresa tu nombre: ");
-        player1.setName(scanner.nextLine());
-        while (isRunning && (player1.getScore() < 15 || player1.getScore() < 15)) {
-            // Update game logic
+        player.setName(scanner.nextLine());
+
+        while ((player.getScore() < 15 || cpuPlayer.getScore() < 15)) {
             gameUpdate();
         }
-    }
 
+    }
     private void gameUpdate() {
-        // generate a deck
+        // Generar mazo y mezclarlo
         Deck trucodeck = new Deck();
         trucodeck.shuffle();
-
-        //Each player draws 3 cards
-        player1.drawCards(trucodeck);
-        //player2.drawCards(trucodeck);
-
-        //cpu draws cards
-
-        //Phase 1 starts
-
-        // Print cards
-        System.out.println();
-        System.out.println(player1.getName() + " tu mano es: \n" + player1.getHand());
-        System.out.println();
-
-        //Define which player is hand and which is foot
-        //first is random
-
-
-        player1.isHand = true;
-
-        if (player1.isHand == true){
-
-            //player1 plays
-            switch (playOptions()){
-                case 1:
-                    playEnvido();
-                    break;
-                case 2:
-                    playTruco();
-                    break;
-                case 3:
-                    //irse al mazo
-                    break;
-            }
-        } else
-           //Wait for the other player to play
-
-        playCard();
-        
+        player.drawCards(trucodeck);
+        cpuPlayer.drawCards(trucodeck);
+        roundManager.roundHandler();
     }
-
-    private int playOptions() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println();
-        System.out.println("Qué deseas hacer?");
-        System.out.println("1. Envido");
-        System.out.println("2. Truco");
-        System.out.println("3. Al Mazo");
-        return scanner.nextInt();
-
-    }
-
-    private void playTruco(){
-        player1TrucoChant = true;
-        int TrucoCounter = 1;
-        //wait for other player to respond to truco
-        // if player respond yes
-        playCard();
-    }
-
-    private void playEnvido(){
-        Scanner scanner = new Scanner(System.in);
-        player1.calculateEnvidoPoints();
-        player1EnvidoChant = true;
-    }
-
-    public void playCard(){
-        System.out.println(player1.getName()+", Elige la carta a jugar? [1,2,3]");
-         List<Card> hand = player1.getHand();
-
-        int cardIndex = new Scanner(System.in).nextInt();
-
-        if (hand.size() < cardIndex) {
-            System.out.println("Seleccionaste una carta inexistente.");
-            System.out.println("Intentalo de nuevo.");
-            System.out.println();
-            playCard();
+    private void defineTrucoWinner() {
+        if (player.lastPlaydTrucoValue > cpuPlayer.lastPlaydTrucoValue) {
+            player.setScore(+2);
+            System.out.println(player.getName() + " gana el truco");
+        } else {
+            cpuPlayer.setScore(+2);
+            System.out.println("CPU gana el truco");
         }
-        Card SelectedCard1 = hand.get(cardIndex-1);
-        System.out.println(SelectedCard1);
-        hand.remove(cardIndex-1);
-        System.out.println(hand.size() + " cards remaining");
     }
 
-//    private void updateScore(){
-//        player1.setScore(1);
-//    }
-//    public void ShowCards(){
-//
-//    }
-
+   public void printLogo () {
+       System.out.println("                                                                                                                                                                                                        \n" +
+               "      =%%#      =%%%#     .%%%%-      #%%=      #%%%%%#*-      =#@@@%+.     .+%@@%*-         #%%=    *%%*      .%%%%%%#+.   :%%%%%%%%%.-%%%%%%%%%%%  %%%%%%#+:   -%%%    *%%=    =#@@@#+      :*%@@%*.  \n" +
+               "      @@@@-     +@@@@:    =@@@@-     :@@@@      %@@@@@@@@#   .%@@@@@@@@:   -@@@@@@@@*        =@@@   :@@@.      .@@@@@@@@@+  -@@@@@@@@@.=@@@@@@@@@@@  @@@@@@@@@+  -@@@    %@@=   %@@@@@@@@.   +@@@@@@@@= \n" +
+               "     =@@@@#     +@@@@*    %@@@@-     #@@@@=     %@@+..-@@@=  #@@#.  +@@%  .@@@=  :@@@+        %@@+  #@@+       .@@@:..+@@@. -@@@......  ...=@@@...   @@@-..=@@@: -@@@    %@@=  *@@#.  *@@#  -@@@:  -@@@:\n" +
+               "     %@@%@@:    +@@@@@   :@@@@@-    .@@%@@%     %@@=   #@@* .@@@:   .%%%  +@@%    =@@@        :@@@ :@@%        .@@@.   @@@- -@@@           =@@@      @@@:   @@@= -@@@    %@@=  @@@:   .@@@. #@@+    *@@*\n" +
+               "    -@@*-@@*    +@@#@@=  *@@#@@-    *@@-*@@-    %@@=   %@@+ :@@@          #@@*    :@@@.        *@@=#@@-        .@@@.  .@@@: -@@@:::::      =@@@      @@@:   @@@- -@@@    %@@= :@@@.         @@@-    +@@%\n" +
+               "    #@@- @@@.   +@@+#@#  @@+#@@-   .@@@ -@@#    %@@#++#@@@. :@@@  :=====  #@@+    .@@@.         @@@@@#         .@@@+++%@@#  -@@@@@@@@:     =@@@      @@@*++%@@%  -@@@    %@@= :@@@          @@@-    =@@%\n" +
+               "   :@@@  +@@+   +@@*-@@.-@@.%@@-   +@@*  @@@:   %@@@@@@@#.  :@@@  +@@@@@. #@@+    .@@@.         =@@@@.         .@@@@@@@@+   -@@@*****.     =@@@      @@@@@@@@*   -@@@    %@@= :@@@          @@@-    =@@%\n" +
+               "   *@@%**#@@@   +@@# @@+#@# %@@-   @@@#**%@@#   %@@*-%@@#   :@@@  .-=@@@. *@@*    :@@@.          %@@*          .@@@+=@@@=   -@@@           =@@@      @@@+=@@@+   -@@@    %@@= :@@@.    :::  @@@-    +@@%\n" +
+               "  .@@@@@@@@@@=  +@@# +@@@@- @@@-  =@@@@@@@@@@.  %@@= :@@@-   @@@-   .@@@. =@@%    =@@%           %@@+          .@@@. +@@@.  -@@@           =@@@      @@@: =@@@.  -@@@    %@@=  @@@:   :@@@. #@@*    #@@*\n" +
+               "  +@@%::::+@@@  +@@# .@@@%  @@@-  %@@+::::#@@*  %@@=  *@@%   +@@@=::+@@@.  @@@*::=@@@=           %@@+          .@@@.  %@@*  -@@@------     =@@@      @@@:  %@@#   @@@*::+@@@.  +@@%-.:#@@#  :@@@+::+@@@.\n" +
+               "  @@@=     @@@- +@@#  *@@=  @@@- -@@@.    -@@@. %@@=  .@@@+   *@@@@@@@@*   .%@@@@@@@=            %@@+          .@@@.  -@@@: -@@@@@@@@@.    =@@@      @@@:  :@@@-  -@@@@@@@@=    *@@@@@@@#    -@@@@@@@@: \n" +
+               " :+++      =++= -++=  :++   +++: =++=      +++: +++:   -+++    .=*##*=.      -+##*=.             =++-           +++.   =++= .+++++++++.    :+++      +++.   =+++    =**#*=.      :+*#*+:       =*##*-   \n" +
+               "                                                                                                                                                                                                        \n" +
+               "                                                                                                                                                                                                      ");
+   }
 }
+

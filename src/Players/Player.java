@@ -3,16 +3,105 @@ package src.Players;
 import src.Cards.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Scanner;
 
-public class Player {
+public abstract class Player {
+    public int lastPlaydTrucoValue = 0;
+
+    public int playerResponse = 0;
+
+    public int getPlayerResponse() {
+        return playerResponse;
+    }
+
+    private boolean trucoChant = false;
+
+    private boolean reTrucoChant = false;
+
+    private boolean valeCuatroChant = false;
+
+    public boolean isTrucoChant() {
+        return trucoChant;
+    }
+
+    public boolean isReTrucoChant() {
+        return reTrucoChant;
+    }
+
+    public void setReTrucoChant(boolean reTrucoChant) {
+        this.reTrucoChant = reTrucoChant;
+    }
+
+    public boolean isValeCuatroChant() {
+        return valeCuatroChant;
+    }
+
+    public void setValeCuatroChant(boolean valeCuatroChant) {
+        this.valeCuatroChant = valeCuatroChant;
+    }
+
+    private boolean isHand = false;
+
+    public boolean getIsHand() {
+        return isHand;
+    }
+
+    public void setIsHand(boolean isHand) {
+        this.isHand = isHand;
+    }
+
+    public boolean getTrucoChant() {
+        return trucoChant;
+    }
+
+    public void setTrucoChant(boolean trucoChant) {
+        this.trucoChant = trucoChant;
+    }
+
+    public void setPlayerResponse(int playerResponse) {
+        this.playerResponse = playerResponse;
+    }
+
+    public int getLastPlaydTrucoValue() {
+        return lastPlaydTrucoValue;
+    }
+
+    public void setLastPlaydTrucoValue(int lastPlaydTrucoValue) {
+        this.lastPlaydTrucoValue = lastPlaydTrucoValue;
+    }
+
     private String name;
+    private List<Card> hand;
+    private int score;
+    private int numCards = 3;
 
-    public boolean isHand;
+    public Player(String name) {
+        this.name = name;
+        this.hand = new ArrayList<>();
+        this.score = 0;
+    }
+
+    // Getters and Setters
+    public String getName() {
+        return name;
+    }
+
+    public int getScore() {
+        return score;
+    }
 
     public void setName(String name) {
         this.name = name;
     }
+
+    public int getNumCards() {
+        return numCards;
+    }
+
+    public List<Card> getHand() {
+        return hand;
+    }
+
 
     public void setHand(List<Card> hand) {
         this.hand = hand;
@@ -22,26 +111,13 @@ public class Player {
         this.score = score;
     }
 
-    public int getNumCards() {
-        return numCards;
-    }
-
     public void setNumCards(int numCards) {
         this.numCards = numCards;
     }
 
-    private List<Card> hand;
-    private int score;
-    int numCards = 3;
-
-    public Player(String name) {
-        this.name = name;
-        this.hand = new ArrayList<>();
-        this.score = 0;
-    }
-
+    // Gameplay Methods
     public void drawCard(Deck deck) {
-        if (hand.size() >= 3) {
+        if (hand.size() >= numCards) {
             System.out.println("Max number of cards drawn");
             return;
         }
@@ -52,35 +128,24 @@ public class Player {
             System.out.println("Deck is empty");
         }
     }
-    public String getName() {
-        return name;
-    }
 
-    public void updateScore(int points) {
-        score += points;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-
-    public List<Card> getHand() {
-        return hand;
-    }
-
-    public void drawCards(Deck deck){
-        for (int i = 0; i < 3; i++) {
+    public void drawCards(Deck deck) {
+        for (int i = 0; i < numCards; i++) {
             Card card = deck.drawCard();
-            if (card != null){
+            if (card != null) {
                 hand.add(card);
-            }else {
+            } else {
                 System.out.println("Deck is empty");
             }
         }
         deck.removeCard(hand);
     }
 
+    public void updateScore(int points) {
+        score += points;
+    }
+
+    // Envido Methods
     public int calculateEnvidoPoints() {
         int envidoPoints = 0;
         boolean hasThreeSameSuit = false;
@@ -122,8 +187,8 @@ public class Player {
 
             if (envidoPoints == 0) {
                 int maxEnvidoValue = 0;
-                for (int i = 0; i < hand.size(); i++) {
-                    int currentEnvidoValue = hand.get(i).envidoValue();
+                for (Card card : hand) {
+                    int currentEnvidoValue = card.envidoValue();
                     if (currentEnvidoValue > maxEnvidoValue) {
                         maxEnvidoValue = currentEnvidoValue;
                     }
@@ -135,5 +200,36 @@ public class Player {
         System.out.println("Envido Points: " + envidoPoints);
         return envidoPoints;
     }
+    // Truco Methods
+    public void playTruco() {
 
+    }
+
+    public boolean respondToTruco() {
+        boolean playerAcceptsTruco = false;
+        Scanner scanner = new Scanner(System.in);
+        String playerResponse = scanner.nextLine();
+        if (playerResponse.equalsIgnoreCase("S")) {
+            playerAcceptsTruco = true;
+        } else if (playerResponse.equalsIgnoreCase("N")) {
+            playerAcceptsTruco = false;
+        }
+        return playerAcceptsTruco;
+    }
+
+    // Card Playing Methods
+    public Card playCard() {
+        return null;
+    }
+
+    public abstract void playEnvido();
+
+    // General Gameplay Methods
+    public void playOptions() {
+
+    }
+
+    public void endTurn() {
+        // ... (add logic for ending the turn)
+    }
 }
